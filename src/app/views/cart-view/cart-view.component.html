@@ -1,0 +1,53 @@
+<h1 class="cart-title">Cart 🛒</h1>
+
+<div>
+  <p-card *ngFor="let product of products; let i = index" class="cart-container--card">
+    <div class="first-container">
+      <section>
+        <h5 class="product-name">Product name: {{product.name}}</h5>
+        <img [src]="product.imgPath" alt="default image" class="defaultImg">
+      </section>
+
+      <section class="detail-product__section">
+        <p><b>Sold by:</b> {{product.seller}}</p>
+        <p><b>Parcel shipping: </b>Delivery in {{product.minShipping}} - {{product.maxShipping}} business days
+        </p>
+        <p><b>Product Id:</b> {{product.itemId}}</p>
+        <p> <b>Price per unit: </b>{{product.net_price}}€ </p>
+        <div class="remove-button__container">
+          <button pButton type="button" label="Remove" icon="pi pi-trash" (click)="remove(i)"
+            class="basic-color"></button>
+        </div>
+      </section>
+
+      <section>
+        <div class="total-price__section">
+          <p-inputNumber [(ngModel)]="product.quantity" [showButtons]="true" buttonLayout="horizontal"
+            [inputId]="product.itemId" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-danger"
+            incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+            (onInput)="calculateTotalPrice()" (onBlur)="notUndefinedValues(i)" min='0'>
+          </p-inputNumber>
+        </div>
+        <div class="total-price__section">
+          <p class="total-price"><b>Total price:</b> {{calculateProductPrice(product.net_price, product.quantity)}} €
+          </p>
+        </div>
+      </section>
+    </div>
+  </p-card>
+
+  <p-card class="cart-container__resume">
+    <p><b>Subtotal:</b>{{totalPrice}} €</p>
+    <p *ngIf="calculateShipping()==0"><b>Shipping:</b> Free Shipping </p>
+    <p *ngIf="calculateShipping()!=0"><b>Shipping:</b> {{calculateShipping()}} €</p>
+    <p><b>Subtotal and Shipping (VAT Excl.):</b> {{calculateSubtotalAndShipping()}} €</p>
+    <p><b>VAT:</b> {{vat}} %</p>
+    <p><b>Total (VAT Incl.):</b> {{calculateTotal()}} €</p>
+  </p-card>
+
+  <section class="checkout-button__section">
+    <button pButton type="button" label="Proceed to checkout" [routerLink]="['/summaryView']"
+      (click)="sendPricesToSummary()" class="details">
+    </button>
+  </section>
+</div>

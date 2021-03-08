@@ -1,0 +1,58 @@
+<h1 *ngIf="showTitleAndButton"></h1>
+<div class="homepageImage-container" *ngIf="showTitleAndButton">
+  <a title="golden prices" [routerLink]="['/cartView']" (click)="showTitleAndButton = false">
+    <img src=".././assets/images/home.png" alt="Golden prices image" class="homepageImage"></a>
+    <p-chart type="polarArea" [data]="data"></p-chart>
+</div>
+
+<router-outlet></router-outlet>
+
+<footer class="footer">
+    <nav class="quickLinks">
+        <h4 class="nav-title">Quick links</h4>
+        <ul>
+        <li class="li-bullets">
+          <a href="https://www.metro-markets.com/faqs" target="_blanc">FAQs</a>
+        </li>
+        <li class="li-bullets">
+          <a href="https://www.metro-markets.com/recipes" target="_blanc">Recipes</a>
+        </li>
+        <li class="li-bullets">
+          <a href="https://www.metro-markets.com/contact" target="_blanc">Contact us</a>
+        </li>
+      </ul>
+    </nav>
+
+    <nav class="about">
+      <h4 class="nav-title">About</h4>
+      <ul>
+        <li class="li-bullets">
+          <a href="https://www.metro-markets.com/about" target="_blanc">About metro market</a>
+        </li>
+        <li class="li-bullets">
+          <a href="https://www.metro-markets.com/select-my-branch" target="_blanc">Our branches</a>
+        </li>
+        <li class="li-bullets">
+          <a href="https://www.metro-markets.com/tour" target="_blanc">Virtual store</a>
+        </li>
+      </ul>
+    </nav>
+
+    <nav class="help">
+      <h4 class="nav-title">Help & support</h4>
+      <ul>
+        <li class="li-bullets">
+          <a href="https://www.metro-markets.com/terms-and-conditions" target="_blanc">Terms & conditions</a>
+        </li>
+      </ul>
+    </nav>
+
+    <small>
+      <span class="footer-love">
+        <span class="we">Made with </span>
+        <span class="heart">&#10084;</span>
+        <span> by Alejandra</span>
+      </span>
+      <span class="footer-copyright"> &copy; 2021 </span>
+    </small>
+</footer>

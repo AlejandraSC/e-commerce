@@ -1,0 +1,149 @@
+<h1 class="summary-title">Review your order</h1>
+
+<div class="summary-general__container">
+    <section>
+        <p-card>
+            <h4 class="section-title">Shipping address </h4>
+            <div class="change-button__container">
+                <button pButton class="button-effect" type="button" label="Change" (click)="showMaximizableDialogShipping()">
+                </button>
+            </div>
+            <p>{{name}}</p>
+            <p>{{street}}</p>
+            <p>{{postalCode}}</p>
+            <p>{{city}}</p>
+            <p>{{country}}</p>
+        </p-card>
+
+        <p-card>
+            <h4 class="section-title">Billing address </h4>
+            <div class="change-button__container">
+                <button pButton class="button-effect" type="button" label="Change"  (click)="showMaximizableDialogBilling()">
+                </button>
+            </div>
+            <p *ngIf="sameDirection">Same direction</p>
+            <p *ngIf="showDialog">{{billName}}</p>
+            <p *ngIf="showDialog">{{billStreet}}</p>
+            <p *ngIf="showDialog">{{billPostalCode}}</p>
+            <p *ngIf="showDialog">{{billCity}}</p>
+            <p *ngIf="showDialog">{{billCountry}}</p>
+        </p-card>
+
+        <p-card>
+            <h4 class="section-title">Payment method </h4>
+            <div class="change-button__container">
+                <button pButton class="button-effect" type="button" label="Change" (click)="showMaximizableDialogPayment()">
+                </button>
+            </div>
+            <p>{{cardholderName}}</p>
+            <p>{{cardNumber}}</p>
+            <p>{{cvv}}</p>
+            <p>{{expirationDate}}</p>
+        </p-card>
+    </section>
+
+    <section>
+        <p-card class="summary-container__resume">
+            <h2 class="section-title">Total</h2>
+            <p><b>Subtotal:</b> {{prices[0]}} €</p>
+            <p *ngIf="prices[1]==0"><b>Shipping:</b> Free Shipping </p>
+            <p *ngIf="prices[1]!=0"><b>Shipping:</b> {{prices[1]}} €</p>
+            <p><b>Subtotal and Shipping (VAT Excl.):</b> {{prices[2]}} €</p>
+            <p><b>VAT:</b> {{prices[3]}} %</p>
+            <p><b>Total (VAT Incl.):</b> {{prices[4]}} €</p>
+        </p-card>
+        <section class="order-button__section">
+            <button pButton class="details order-button" type="button" label="Place order"
+                (click)="showMaximizableDialogDone()">
+            </button>
+        </section>
+        <p-dialog header="Order completed" [(visible)]="displayMaximizableDialogDone" [style]="{width: '100vw'}"
+            [baseZIndex]="10000">
+            <p>Congratulations, your order has been completed! </p>
+            <button pButton class="button-effect" type="button" label="Ok" (click)="goHome()"></button>
+        </p-dialog>
+    </section>
+
+    <section>
+        <p-card>
+            <h2 class="section-title cart-title__resume">In your cart</h2>
+            <div class="change-button__container">
+                <button pButton class="button-effect" type="button" label="Edit" [routerLink]="['/cartView']">
+                </button>
+            </div>
+            <p-card *ngFor="let product of products; let i = index">
+                <h5 class="productName">Product name: {{product.name}}</h5>
+                <img [src]="product.imgPath" alt="default image" class="defaultImg" />
+                <p><b>Sold by:</b> {{product.seller}}</p>
+                <p class="productName"><b>Parcel shipping:</b>  Delivery in{{product.minShipping}} -
+                    {{product.maxShipping}}business days</p>
+                <p class="productName"><b>Product Id:</b> {{product.itemId}}</p>
+                <p><b>Price per unit:</b> {{product.net_price}}€ </p>
+                <p><b>Number of units:</b> {{product.quantity}}</p>
+            </p-card>
+        </p-card>
+    </section>
+</div>
+
+
+<p-dialog header="Shipping address" [(visible)]="displayMaximizableShipping" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [baseZIndex]="10000">
+    <label for="name">Name and surname: </label>
+    <input type="text" pInputText placeholder="Name and surname" [(ngModel)]="name">
+    <label for="street">Street: </label>
+    <input type="text" pInputText placeholder="Street" [(ngModel)]="street">
+    <label for="name">Postal code: </label>
+    <p-inputNumber type="number" placeholder="postal code" [useGrouping]="false" [(ngModel)]="postalCode">
+    </p-inputNumber>
+    <label for="name">City: </label>
+    <input type="text" pInputText placeholder="city" [(ngModel)]="city">
+    <label for="name">Country: </label>
+    <input type="text" pInputText placeholder="country" [(ngModel)]="country">
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayMaximizableShipping=false" label="Ok" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Billing address" [(visible)]="displayMaximizableBilling" [maximizable]="true" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="10000">
+    <p-dropdown [options]="directions" [(ngModel)]="selectedDirection" placeholder="Select" optionLabel="name"
+        (onChange)="addDifferentAddress()"></p-dropdown>
+    <div *ngIf="showDialog">
+        <label for="name">Name and surname: </label>
+        <input type="text" pInputText placeholder="Name and surname" [(ngModel)]="billName">
+        <label for="street">Street: </label>
+        <input type="text" pInputText placeholder="Street" [(ngModel)]="billStreet">
+        <label for="postalCode">Postal code: </label>
+        <p-inputNumber type="number" placeholder="postal code" [useGrouping]="false" [(ngModel)]="billPostalCode">
+        </p-inputNumber>
+        <label for="city">City: </label>
+        <input type="text" pInputText placeholder="city" [(ngModel)]="billCity">
+        <label for="country">Country: </label>
+        <input type="text" pInputText placeholder="country" [(ngModel)]="billCountry">
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayMaximizableBilling=false" label="Ok" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>
+
+
+<p-dialog header="Payment Method" [(visible)]="displayMaximizableDialogPayment" [maximizable]="true" [modal]="true"
+    [style]="{width: '50vw'}" [baseZIndex]="10000">
+    <label for="cardholderName">Cardholder name: </label>
+    <input type="text" pInputText placeholder="Cardholder name" [(ngModel)]="cardholderName">
+    <label for="cardNumber">Card number: </label>
+    <p-inputNumber type="number" maxlength="16" placeholder="card number" [useGrouping]="false"
+        [(ngModel)]="cardNumber">
+    </p-inputNumber>
+    <label for="name">Expiration date: </label>
+    <p-calendar type="date" placeholder="Expiration date" [(ngModel)]="expirationDate"></p-calendar>
+    <label for="name">CVV: </label>
+    <p-inputNumber type="number" maxlength="3" placeholder="cvv" [useGrouping]="false" [(ngModel)]="cvv">
+    </p-inputNumber>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayMaximizableDialogPayment=false" label="Ok"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

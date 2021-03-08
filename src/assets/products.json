@@ -1,0 +1,35 @@
+[
+	{
+		"name": "Cool Item 1",
+		"seller": "Cool Seller 1",
+		"itemId": "698e14de-5724-4fe6-8cd7-c71cb6a46319",
+		"net_price": 65.14,
+		"tax_value": 15.6,
+		"quantity": 4,
+		"imgPath": "../../../assets/images/defaultimg.jpeg",
+		"minShipping": "1",
+		"maxShipping": "3"
+	},
+	{
+		"name": "Cool Item 2",
+		"seller": "Cool Seller 2",
+		"itemId": "698e14de-5724-4fe6-8cd7-c71cb6a46345",
+		"net_price": 215.14,
+		"tax_value": 45.6,
+		"quantity": 3,
+		"imgPath":"../../../assets/images/mesa.jpg",
+		"minShipping": "3",
+		"maxShipping": "5"
+	},
+	{
+		"name": "Cool Item 3",
+		"seller": "Cool Seller 3",
+		"itemId": "698e14de-5724-4fe6-8cd7-c71cb6a46346",
+		"net_price": 80,
+		"tax_value": 20,
+		"quantity": 2,
+		"imgPath": "../../../assets/images/sillon.jpg",
+		"minShipping": "10",
+		"maxShipping": "15"
+	}
+]
